@@ -26,6 +26,7 @@ export default function ChessBoard({
       onMove(move);
       return true;
     } catch (error) {
+      console.error("Invalid move:", error);
       onMove(null);
       return false;
     }

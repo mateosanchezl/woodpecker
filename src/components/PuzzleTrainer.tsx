@@ -11,6 +11,7 @@ import ChessBoard from "./ChessBoard";
 import { loadProgress, saveProgress, Progress, PuzzleAttempt } from "../lib/storage";
 import { Chess, Move } from "chess.js";
 import { Puzzle } from "@/app/types";
+import { toast } from "sonner";
 
 export default function PuzzleTrainer() {
   const [puzzles, setPuzzles] = useState<Puzzle[]>([]);
@@ -79,7 +80,6 @@ export default function PuzzleTrainer() {
     }
     // Compare user move to the expected move (starting at index 1)
     if (move.from === solution[moveIndex].from && move.to === solution[moveIndex].to) {
-      setFeedbackMsg("Correct move!");
       const newChess = new Chess(chess!.fen());
       newChess.move(move);
       setChess(newChess);
@@ -96,6 +96,8 @@ export default function PuzzleTrainer() {
         }, 500);
       } else {
         // Puzzle complete logic
+        toast("Puzzle solved!", { style: { backgroundColor: "green", color: "white" } });
+
         clearInterval(timerInterval!);
         const attempt: PuzzleAttempt = { cycle: progress.currentCycle, time: timer, success: true };
         const puzzleId = currentPuzzle.id;
@@ -123,13 +125,13 @@ export default function PuzzleTrainer() {
   return (
     <div className="flex min-h-screen w-fit">
       {/* Main Board Area */}
-      <div className="flex-1 p-10">
+      <div className="flex-1 p-5">
         <Card className="p-10">
           {chess && (
             <ChessBoard
               fen={chess.fen()}
               onMove={onMove}
-              boardWidth={700}
+              boardWidth={650}
               boardOrientation={userColor}
             />
           )}
@@ -146,7 +148,7 @@ export default function PuzzleTrainer() {
       </div>
 
       {/* Sidebar (Desktop) */}
-      <div className="w-80 p-4 hidden md:block">
+      <div className="w-100 p-4 hidden md:block">
         <ScrollArea className="h-[calc(100vh-2rem)]">
           {puzzles.map((puzzle, idx) => {
             const attempts = progress.puzzleAttempts[puzzle.id] || [];
