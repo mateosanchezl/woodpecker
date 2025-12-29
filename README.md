@@ -1,5 +1,8 @@
 # Chess Puzzle Trainer
 
+# LAUNCHED!
+## I recently launched [Peck Chess](https://peckchess.com), a deployed version of what this app aimed to deliver with many more features and a more polished experience!
+
 This is a chess puzzle trainer application built with Next.js and shadcn/ui. It implements the **Woodpecker Method**, a technique designed to improve chess skills by repeatedly solving a set of puzzles. The app adopts a local-first approach, storing all progress data in the browser's local storage, making it easy to use without requiring a backend server.
 
 ## Features
